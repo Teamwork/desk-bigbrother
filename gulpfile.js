@@ -37,3 +37,5 @@ gulp.task('images', function() {
 		.pipe(imagemin())
 		.pipe(gulp.dest('images/'));
 });
+
+gulp.task('default', ['build']);
