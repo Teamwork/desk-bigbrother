@@ -4,11 +4,11 @@ var gutil = require('gulp-util');
 var minifyCSS = require('gulp-clean-css');
 var runSequence = require('run-sequence');
 var coffee = require('gulp-coffee');
-// var imagemin = require('gulp-imagemin');
+var imagemin = require('gulp-imagemin');
 
 
 gulp.task('less', function() {
-	gulp.src('./css/stylesheet.less')
+	gulp.src('./css/styles.less')
 		.pipe(less()
 			.on('error', gutil.log)
 			.on('error', gutil.beep)
@@ -33,7 +33,7 @@ gulp.task('build',  function(callback) {
 });
 
 gulp.task('images', function() {
-	gulp.src('images/logos/*')
+	gulp.src('images/*')
 		.pipe(imagemin())
-		.pipe(gulp.dest('images/logos'));
+		.pipe(gulp.dest('images/'));
 });
