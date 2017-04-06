@@ -4,11 +4,84 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" value="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="/css/styles.css" />
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 	</head>
 	<body>
+		<div class="container">
+			<div class="col filters">
+				<h3 class="me">
+						<img src="images/pixel.png" data-bind="attr: {src: meAvatar, alt: meName}" />
+						<span data-bind="text: meName"></span>
+						<span class="email" data-bind="text: meEmail"></span>
+				</h3>
+				<form id="filterForm" data-bind="submit: filterTickets">
+					<h4><i class="fa fa-inbox"></i> Inboxes <span data-bind="text: inboxCount">0 selected</span></h4>
+					<ul id="inboxes" class="selectable" data-bind="foreach: inboxes">
+						<li><a href="#" class="inbox" data-bind="text: name, click: $root.selectInbox, attr: {'data-id': id}"></a></li>
+					</ul>
+					<h4><i class="fa fa-user-circle-o"></i> Agents <span data-bind="text: userCount">0 selected</span></h4>
+					<ul id="users" class="selectable" data-bind="foreach: users">
+						<li>
+							<a href="#" class="user" data-bind="click: $root.selectUser, attr: {'data-id': id}">
+								<img src="images/pixel.png" data-bind="attr: {src: avatar, alt: name}" />
+								<span data-bind="text: name"></span>
+							</a>
+						</li>
+					</ul>
+					<hr />
+					<label for="ticketCount"># of tickets: </label>
+					<input type="number" required id="ticketCount" value="3" />
+					<button type="submit" class="button">Get Tickets</button>
+				</form>
+			</div>
+			<div class="col results">
+				<div class="placeholder">
+					<img src="images/logo.png" width="293" />
+					<h3>Review Tickets</h3>
+					<p>Select your filters on the left to get started.</p>
+				</div>
+				<div class="loader"></div>
+				<div class="tickets">
+					<div data-bind="foreach: tickets">
+						<div class="ticket">
+							<div>
+								<h4>
+									<a href="#" target="_blank" data-bind="html: subject + '<span>#' + id + '</span>', attr: {href: 'https://digitalcrew.teamwork.com/desk/#/tickets/' + id}"></a>
+								</h4>
+								<p data-bind="text: preview"></p>
+								<ul class="info">
+									<li><img src="images/pixel.png" data-bind="attr: {src: avatar}" /></li>
+									<li><strong>Agent:</strong> <span data-bind="text: agent"></span></li>
+									<li><strong>Status:</strong> <span data-bind="text: status"></span></li>
+									<li><strong>Last Updated:</strong> <span data-bind="text: moment(date).format('MMMM Do YYYY, h:mm a')"></span></li>
+								</ul>
+							</div>
+							<form data-bind="submit: $root.reviewTickets">
+								<input type="hidden" class="id" data-bind="value: id" name="inputId" />
+								<h5><i class="fa fa-thumbs-o-up"></i> What was done well?</h5>
+								<textarea name="donewell" class="donewell"></textarea>
+								<h5><i class="fa fa-flag-o"></i> Would you like to suggest any improvements?</h5>
+								<textarea name="improvements" class="improvements"></textarea>
+								<h5><i class="fa fa-star-o"></i> Rating</h5>
+								<div class="rating">
+									<label>1 <input type="radio" value="1" data-bind="attr: {name: id + '_rating'}" /></label>
+									<label>2 <input type="radio" value="2" data-bind="attr: {name: id + '_rating'}" /></label>
+									<label>3 <input type="radio" value="3" data-bind="attr: {name: id + '_rating'}" /></label>
+									<label>4 <input type="radio" value="4" data-bind="attr: {name: id + '_rating'}" /></label>
+									<label>5 <input type="radio" value="5" data-bind="attr: {name: id + '_rating'}" /></label>
+									<button type="submit">Send Review</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 		<script src="/js/script.js"></script>
 	</body>
 </html>

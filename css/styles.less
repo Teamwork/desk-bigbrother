@@ -1,0 +1,320 @@
+@green: #65d656;
+
+@keyframes pop {
+	0% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.1);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
+body {
+	font-family: 'Open Sans';
+	font-size: 14px;
+	margin: 0;
+	padding: 0;
+	color: #333;
+	background: #fafafa;
+}
+
+hr {
+	margin: 15px 0;
+	border: solid #eee;
+	border-width: 1px 0 0;
+}
+
+.container {
+	position: absolute;
+	width: 100%;
+	display: flex;
+	height: 100%;
+	align-items: center;
+}
+
+h3 {
+	font-weight: 300;
+	font-size: 24px;
+}
+
+h3.me {
+	position: relative;
+	padding-left: 65px;
+	padding-top: 5px;
+	margin: 0 0 30px;
+	line-height: 20px;
+	min-height: 50px;
+
+	img {
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+
+	span.email {
+		font-size: 12px;
+		opacity: 0.6;
+		font-weight: 400;
+	}
+}
+
+.fa {
+	opacity: 0.5;
+}
+
+h4 {
+	font-weight: 300;
+	font-size: 18px;
+	margin: 0 0 15px;
+
+	span {
+		font-size: 12px;
+		opacity: 0.6;
+		font-weight: 400;
+	}
+}
+
+.filters {
+	width: 300px;
+	min-width: 300px;
+	background: white;
+	height: 100%;
+	box-shadow: 0 0 10px fade(black,5%);
+
+	label {
+		font-weight: 300;
+	}
+
+	input {
+		height: 30px;
+		width: 40px;
+		text-align: center;
+		border: 1px solid #eee;
+		border-radius: 4px;
+		padding: 0;
+		vertical-align: middle;
+	}
+}
+
+.col {
+	padding: 30px;
+	box-sizing: border-box;
+}
+
+.results {
+	flex-grow: 1;
+	overflow: auto;
+	height: 100%;
+	position: relative;
+}
+
+.tickets {
+	display: none;
+
+	.ticket {
+		margin: 0 0 30px 0;
+		padding: 30px 0;
+		background: white;
+		border-radius: 4px;
+		box-shadow: 0 0 10px fade(black,5%);
+		display: flex;
+		align-items: center;
+		position: relative;
+		overflow: hidden;
+
+		&.loading::after, &.success::after {
+			content: " ";
+			position: absolute;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			right: 0;
+			background: white;
+			opacity: 0.5;
+			z-index: 5;
+		}
+
+		&.success::after {
+			background: fade(@green,90%) url('../images/smile.png') center center no-repeat;
+			background-size: 100px 100px;
+		}
+
+		> * {
+			flex-basis: 0;
+			flex-grow: 1;
+			padding: 0 30px;
+		}
+	}
+
+	form {
+		border-left: 1px solid #eee;
+	}
+
+	.info {
+		list-style: none;
+		padding: 0;
+		margin: 30px 0 0;
+		font-size: 13px;
+		padding-left: 65px;
+		position: relative;
+
+		img {
+			position: absolute;
+			top: 50%;
+			margin-top: -25px;
+			left: 0;
+			border-radius: 50%;
+			width: 50px;
+			height: 50px;
+		}
+
+		strong {
+			font-weight: 600;
+		}
+	}
+
+	textarea {
+		width: 100%;
+		height: 80px;
+		box-sizing: border-box;
+		border: 1px solid #eee;
+		border-radius: 4px;
+		padding: 15px;
+	}
+
+	h5 {
+		font-size: 14px;
+		font-weight: 300;
+		margin: 15px 0 10px;
+
+		&:first-child {
+			margin-top: 0;
+		}
+
+		.fa {
+			margin-right: 5px;
+		}
+	}
+
+	button {
+		display: block;
+	}
+
+	.rating label {
+		margin-right: 15px;
+	}
+
+	h4 {
+		font-weight: 400;
+
+		a {
+			color: inherit;
+			text-decoration: none;
+		}
+
+		span {
+			display: block;
+			margin-top: 5px;
+		}
+	}
+
+	p {
+		font-size: 16px;
+		font-weight: 300;
+		opacity: 0.6;
+	}
+}
+
+.placeholder {
+	text-align: center;
+	width: 350px;
+	height: 300px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	margin: auto;
+
+	h3, p {
+		margin: 15px 0 0;
+	}
+
+	h3 {
+		font-size: 30px;
+	}
+
+	p {
+		font-weight: 300;
+		font-size: 16px;
+		opacity: 0.6;
+	}
+}
+
+ul.selectable {
+	list-style: none;
+	margin: 0 -20px 15px;
+	padding: 0 20px;
+	font-size: 0;
+	max-height: 205px;
+	overflow: auto;
+
+	li {
+
+		a {
+			display: block;
+			color: #333;
+			line-height: 30px;
+			padding: 0 20px;
+			border-radius: 4px;
+			border: 1px solid #fff;
+			text-decoration: none;
+			font-size: 12px;
+			margin: 2px 0;
+			transition: all 0.15s;
+			animation: none;
+
+			img {
+				width: 20px;
+				height: 20px;
+				vertical-align: middle;
+				border-radius: 10px;
+				display: block;
+				float: left;
+				margin: 5px 10px 5px 0;
+			}
+
+			&.selected {
+				border-color: @green;
+				color: darken(@green,10%);
+				background: lighten(@green,40%);
+				animation: pop 0.25s 1;
+			}
+		}
+	}
+}
+
+button {
+	background: @green;
+	color: white;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 32px;
+	padding: 0 15px;
+	border-radius: 4px;
+	border: 0;
+	cursor: pointer;
+	transition: all 0.15s;
+	margin: 15px 0;
+	vertical-align: middle;
+
+	&:hover {
+		background: darken(@green, 15%)
+	}
+}
