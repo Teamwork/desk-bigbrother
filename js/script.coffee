@@ -165,4 +165,11 @@ $.ajax({
 	BigBrother.users(mappedUsers)
 	return
 
+$(".filters h4").on "click", ->
+	if $(this).hasClass("open")
+		$(".filters h4").removeClass "open"
+	else
+		$(".filters h4").removeClass "open"
+		$(this).addClass "open"
+
 ko.applyBindings BigBrother
