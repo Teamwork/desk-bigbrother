@@ -1,0 +1,33 @@
+{
+  "name": "Big Brother",
+  "description": "Peer reviews for Teamwork Desk",
+  "author": "Teamwork.com",
+  "license": "ISC",
+  "contributors": [
+    {
+      "name": "Alder Cass",
+      "email": "alder.cass@teamwork.com"
+    },
+    {
+      "name": "Gordon Murray",
+      "email": "gordon.murray@teamwork.com"
+    },
+    {
+      "name": "Adrian Kerr",
+      "email": "adrian@teamwork.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Teamwork/desk-bigbrother.git"
+  },
+  "dependencies": {
+    "gulp": "*",
+    "gulp-clean-css": "*",
+    "gulp-less": "*",
+    "gulp-util": "*",
+    "run-sequence": "*",
+    "gulp-coffee": "*",
+    "gulp-imagemin": "*"
+  }
+}
