@@ -65,7 +65,7 @@ h3.me {
 }
 
 .fa {
-	opacity: 0.5;
+	opacity: 0.3;
 }
 
 h4 {
@@ -312,6 +312,25 @@ h4 {
 
 	.rating label {
 		margin-right: 15px;
+		line-height: 20px;
+		color: #666;
+		font-weight: 600;
+		font-size: 13px;
+	}
+
+	.rating input {
+		-webkit-appearance: none;
+		display: inline-block;
+		width: 20px;
+		height: 20px;
+		vertical-align: top;
+		background: url('../images/star.svg') center center no-repeat;
+		background-size: contain;
+		margin: 0;
+
+		&:checked {
+			background-image: url('../images/star-selected.svg');
+		}
 	}
 
 	h4 {
