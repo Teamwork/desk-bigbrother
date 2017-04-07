@@ -55,8 +55,9 @@ FilterViewModel = () ->
 			self.selectedUsers.push(user)
 
 	self.filterTickets = () ->
-		$(".placeholder, .tickets, .no-results").hide()
-		$(".loader").show()
+		$(".placeholder, .tickets, .no-results").stop().animate {opacity: 0}, 200, () ->
+			$(this).hide()
+		$(".loader").stop().show().animate {opacity: 1}, 200
 		BigBrother.tickets.removeAll()
 		$.ajax({
 			url: "https://digitalcrew.teamwork.com/desk/v1/tickets/search.json",
@@ -77,9 +78,10 @@ FilterViewModel = () ->
 				"Authorization": "Basic " + btoa(APIKey + ":xxx")
 			}
 		}).done (data) ->
-			$(".loader").hide()
+			$(".loader").stop().animate {opacity: 0}, 200, () ->
+				$(this).hide()
 			if data.tickets.length is 0
-				$(".no-results").show()
+				$(".no-results").stop().show().animate {opacity: 1}, 200
 			else
 				mappedTickets = $.map data.tickets, (ticket) ->
 					agent = if ticket.assignedTo then ticket.assignedTo.firstName + " " + ticket.assignedTo.lastName else "None"
@@ -87,7 +89,7 @@ FilterViewModel = () ->
 					ticket = new Ticket(ticket.id, agent, ticket.preview, ticket.subject, ticket.status, ticket.updatedAt, avatar)
 					BigBrother.tickets.push(ticket)
 					return
-				$(".tickets").show()
+				$(".tickets").stop().show().animate {opacity: 1}, 200
 			return
 		return
 
