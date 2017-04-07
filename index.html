@@ -22,7 +22,7 @@
 					<ul id="inboxes" class="selectable" data-bind="foreach: inboxes">
 						<li><a href="#" class="inbox" data-bind="text: name, click: $root.selectInbox, attr: {'data-id': id}"></a></li>
 					</ul>
-					<h4><i class="fa fa-user-circle-o"></i> Agents <span data-bind="text: userCount">0 selected</span></h4>
+					<h4 class="open"><i class="fa fa-user-circle-o"></i> Agents <span data-bind="text: userCount">0 selected</span></h4>
 					<ul id="users" class="selectable" data-bind="foreach: users">
 						<li>
 							<a href="#" class="user" data-bind="click: $root.selectUser, attr: {'data-id': id}">
