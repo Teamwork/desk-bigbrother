@@ -163,7 +163,7 @@ BigBrother.selectedUsers.subscribe(function(users) {
   return BigBrother.selectedUserIds(ids);
 });
 
-init = function(APIKey) {
+init = function(APIKey, storeKey) {
   $.ajax({
     url: "https://digitalcrew.teamwork.com/desk/v1/me.json",
     headers: {
@@ -174,9 +174,11 @@ init = function(APIKey) {
     BigBrother.meEmail(data.user.email);
     BigBrother.meAvatar(data.user.avatarURL);
     $(".login").hide();
-    localStorage.setItem("APIKey", $("#APIKey").val());
-    ko.applyBindings(BigBrother);
+    if (storeKey) {
+      localStorage.setItem("APIKey", $("#APIKey").val());
+    }
   }).fail(function() {
+    $(".login").show();
     return $(".login p").text("Invalid API Key!");
   });
   $.ajax({
@@ -206,19 +208,21 @@ init = function(APIKey) {
     });
     BigBrother.users(mappedUsers);
   });
-  return $(".filters h4").on("click", function() {
-    if ($(this).hasClass("open")) {
-      return $(".filters h4").removeClass("open");
-    } else {
-      $(".filters h4").removeClass("open");
-      return $(this).addClass("open");
-    }
-  });
+  ko.applyBindings(BigBrother);
 };
+
+$(".filters h4").on("click", function() {
+  if ($(this).hasClass("open")) {
+    return $(".filters h4").removeClass("open");
+  } else {
+    $(".filters h4").removeClass("open");
+    return $(this).addClass("open");
+  }
+});
 
 $("#login-form").on("submit", function(e) {
   e.preventDefault();
-  init($("#APIKey").val());
+  init($("#APIKey").val(), true);
 });
 
 if (localStorage.getItem("APIKey")) {

@@ -134,7 +134,7 @@ BigBrother.selectedUsers.subscribe (users) ->
 	BigBrother.userCount(users.length + " selected")
 	BigBrother.selectedUserIds(ids)
 
-init = (APIKey) ->
+init = (APIKey, storeKey) ->
 
 	$.ajax({
 		url: "https://digitalcrew.teamwork.com/desk/v1/me.json",
@@ -146,10 +146,11 @@ init = (APIKey) ->
 		BigBrother.meEmail(data.user.email)
 		BigBrother.meAvatar(data.user.avatarURL)
 		$(".login").hide()
-		localStorage.setItem("APIKey",$("#APIKey").val())
-		ko.applyBindings BigBrother
+		if storeKey
+			localStorage.setItem "APIKey", $("#APIKey").val()
 		return
 	.fail ->
+		$(".login").show()
 		$(".login p").text "Invalid API Key!"
 
 	$.ajax({
@@ -176,16 +177,19 @@ init = (APIKey) ->
 		BigBrother.users(mappedUsers)
 		return
 
-	$(".filters h4").on "click", ->
-		if $(this).hasClass("open")
-			$(".filters h4").removeClass "open"
-		else
-			$(".filters h4").removeClass "open"
-			$(this).addClass "open"
+	ko.applyBindings BigBrother
+	return
+
+$(".filters h4").on "click", ->
+	if $(this).hasClass("open")
+		$(".filters h4").removeClass "open"
+	else
+		$(".filters h4").removeClass "open"
+		$(this).addClass "open"
 
 $("#login-form").on "submit", (e) ->
 	e.preventDefault()
-	init $("#APIKey").val()
+	init $("#APIKey").val(), true
 	return
 
 if localStorage.getItem "APIKey"
