@@ -55,7 +55,7 @@ FilterViewModel = () ->
 			self.selectedUsers.push(user)
 
 	self.filterTickets = () ->
-		$(".placeholder, .tickets").hide()
+		$(".placeholder, .tickets, .no-results").hide()
 		$(".loader").show()
 		BigBrother.tickets.removeAll()
 		$.ajax({
@@ -69,21 +69,25 @@ FilterViewModel = () ->
 				"pageSize": $("#ticketCount").val(),
 				"page": 1,
 				"sortBy": "updatedAt",
-				"sortDir": "desc",
-				"statuses": ["solved","closed"]
+				"sortDir": "asc",
+				"statuses": ["solved","closed"],
+				"lastUpdated": $("#startDate").val()
 			}
 			headers: {
 				"Authorization": "Basic " + btoa(APIKey + ":xxx")
 			}
 		}).done (data) ->
-			mappedTickets = $.map data.tickets, (ticket) ->
-				agent = if ticket.assignedTo then ticket.assignedTo.firstName + " " + ticket.assignedTo.lastName else "None"
-				avatar = if ticket.assignedTo then $(".filters a[data-id='#{ticket.assignedTo.id}'] img").attr("src") else null
-				ticket = new Ticket(ticket.id, agent, ticket.preview, ticket.subject, ticket.status, ticket.updatedAt, avatar)
-				BigBrother.tickets.push(ticket)
-				return
 			$(".loader").hide()
-			$(".tickets").show()
+			if data.tickets.length is 0
+				$(".no-results").show()
+			else
+				mappedTickets = $.map data.tickets, (ticket) ->
+					agent = if ticket.assignedTo then ticket.assignedTo.firstName + " " + ticket.assignedTo.lastName else "None"
+					avatar = if ticket.assignedTo then $(".filters a[data-id='#{ticket.assignedTo.id}'] img").attr("src") else null
+					ticket = new Ticket(ticket.id, agent, ticket.preview, ticket.subject, ticket.status, ticket.updatedAt, avatar)
+					BigBrother.tickets.push(ticket)
+					return
+				$(".tickets").show()
 			return
 		return
 

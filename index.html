@@ -4,6 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" value="width=device-width, initial-scale=1" />
 		<title>👀</title>
+		<link rel="icon" type="image/png" sizes="any" href="images/icon.png" />
 		<link rel="stylesheet" href="/css/styles.css" />
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
 		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -31,9 +32,15 @@
 						</li>
 					</ul>
 					<hr />
-					<label for="ticketCount"># of tickets: </label>
-					<input type="number" required id="ticketCount" value="3" />
-					<button type="submit" class="button">Get Tickets</button>
+					<div class="form-group">
+						<label for="startDate">Tickets Since:</label>
+						<input type="date" id="startDate" data-bind="value: moment().format('YYYY-MM-DD')" />
+					</div>
+					<div class="form-group">
+						<label for="ticketCount"># of tickets: </label>
+						<input type="number" required id="ticketCount" value="3" />
+						<button type="submit" class="button">Get Tickets</button>
+					</div>
 				</form>
 			</div>
 			<div class="col results">
@@ -43,6 +50,10 @@
 					<p>Select your filters on the left to get started.</p>
 				</div>
 				<div class="loader"><img src="images/loading.svg" alt="loading..." /></div>
+				<div class="no-results">
+					<img src="images/qmark.svg" alt="?" width="150" height="150" />
+					<h3>No tickets matched your filters</h3>
+				</div>
 				<div class="tickets">
 					<div data-bind="foreach: tickets">
 						<div class="ticket">
