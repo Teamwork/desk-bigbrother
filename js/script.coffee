@@ -1,3 +1,5 @@
+window.APIKey = ""
+
 Inbox = (name, id) ->
 	self = this
 	self.name = name
@@ -135,7 +137,7 @@ BigBrother.selectedUsers.subscribe (users) ->
 	BigBrother.selectedUserIds(ids)
 
 init = (APIKey, storeKey) ->
-
+	window.APIKey = APIKey
 	$.ajax({
 		url: "https://digitalcrew.teamwork.com/desk/v1/me.json",
 		headers: {

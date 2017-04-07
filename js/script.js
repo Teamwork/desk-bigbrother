@@ -1,5 +1,7 @@
 var BigBrother, FilterViewModel, Inbox, Ticket, User, init;
 
+window.APIKey = "";
+
 Inbox = function(name, id) {
   var self;
   self = this;
@@ -164,6 +166,7 @@ BigBrother.selectedUsers.subscribe(function(users) {
 });
 
 init = function(APIKey, storeKey) {
+  window.APIKey = APIKey;
   $.ajax({
     url: "https://digitalcrew.teamwork.com/desk/v1/me.json",
     headers: {
