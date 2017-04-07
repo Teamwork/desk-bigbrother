@@ -12,6 +12,40 @@
 	}
 }
 
+.login {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background: #fafafa;
+	z-index: 50;
+
+	#login-form {
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		margin: auto;
+		width: 400px;
+		height: 100px;
+		text-align: center;
+
+		#APIKey {
+			height: 30px;
+			text-align: center;
+			border: 1px solid #eee;
+			border-radius: 4px;
+			padding: 0;
+			vertical-align: middle;
+			background: #fff;
+			box-sizing: border-box;
+			width: 200px;
+		}
+	}
+}
+
 body {
 	font-family: 'Open Sans';
 	font-size: 14px;
@@ -47,6 +81,13 @@ h3.me {
 	margin: 0 0 30px;
 	line-height: 20px;
 	min-height: 50px;
+
+	#logout {
+		font-size: 12px;
+		color: #666;
+		display: block;
+		font-weight: 600;
+	}
 
 	img {
 		width: 50px;
@@ -318,6 +359,7 @@ h4 {
 		color: #666;
 		font-weight: 600;
 		font-size: 13px;
+		cursor: pointer;
 	}
 
 	.rating input {
@@ -329,6 +371,7 @@ h4 {
 		background: url('../images/star.svg') center center no-repeat;
 		background-size: contain;
 		margin: 0;
+		cursor: pointer;
 
 		&:checked {
 			background-image: url('../images/star-selected.svg');

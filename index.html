@@ -10,12 +10,20 @@
 		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 	</head>
 	<body>
+		<div class="login">
+			<form id="login-form" action="#">
+				<p>Enter your API key to begin:</p>
+				<input type="text" id="APIKey" required placeholder="API Key" />
+				<button type="submit">Go</button>
+			</form>
+		</div>
 		<div class="container">
 			<div class="col filters">
 				<h3 class="me">
 						<img src="images/pixel.png" data-bind="attr: {src: meAvatar, alt: meName}" />
 						<span data-bind="text: meName"></span>
 						<span class="email" data-bind="text: meEmail"></span>
+						<a href="#" id="logout">Log out</a>
 				</h3>
 				<form id="filterForm" data-bind="submit: filterTickets">
 					<h4><i class="fa fa-inbox"></i> Inboxes <span data-bind="text: inboxCount">0 selected</span></h4>
@@ -34,7 +42,7 @@
 					<hr />
 					<div class="form-group">
 						<label for="startDate">Tickets Since:</label>
-						<input type="date" id="startDate" data-bind="value: moment().format('YYYY-MM-DD')" />
+						<input type="date" id="startDate" data-bind="value: moment().subtract(3,'days').format('YYYY-MM-DD')" />
 					</div>
 					<div class="form-group">
 						<label for="ticketCount"># of tickets: </label>
@@ -72,9 +80,9 @@
 							<form data-bind="submit: $root.reviewTickets">
 								<input type="hidden" class="id" data-bind="value: id" name="inputId" />
 								<h5>What was done well?</h5>
-								<textarea name="donewell" class="donewell"></textarea>
+								<textarea required name="donewell" class="donewell"></textarea>
 								<h5>Would you like to suggest any improvements?</h5>
-								<textarea name="improvements" class="improvements"></textarea>
+								<textarea required name="improvements" class="improvements"></textarea>
 								<h5>Rating</h5>
 								<div class="rating">
 									<label>1 <input type="radio" value="1" data-bind="attr: {name: id + '_rating'}" /></label>
