@@ -13,9 +13,12 @@
 		<div class="login">
 			<form id="login-form" action="#">
 				<img src="images/logo.png" width="293" />
-				<p>Enter your Teamwork Desk API key</p>
-				<input type="text" id="APIKey" required placeholder="API Key" />
+				<label for="siteHref">Teamwork site URL</label>
+				<input type="text" id="siteHref" data-bind="value: localStorage.getItem('siteHref')" required placeholder="https://example.teamwork.com" />
+				<label for="siteHref">Teamwork Desk API key</label>
+				<input type="text" id="APIKey" required placeholder="XYqwXOtX..." />
 				<button type="submit">Log in</button>
+				<div class="err"></div>
 			</form>
 		</div>
 		<div class="container">

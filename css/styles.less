@@ -28,15 +28,24 @@
 		bottom: 0;
 		right: 0;
 		margin: auto;
-		width: 400px;
-		height: 300px;
+		width: 250px;
+		height: 360px;
 		text-align: center;
 
-		p {
-			margin: 30px 0 0;
+		img {
+			max-width: 100%;
+			margin-bottom: 30px;
 		}
 
-		#APIKey {
+		label {
+			font-weight: 600;
+			margin: 0 0 5px;
+			text-align: left;
+			display: block;
+			font-size: 13px;
+		}
+
+		input {
 			height: 30px;
 			text-align: left;
 			border: 1px solid #eee;
@@ -45,7 +54,22 @@
 			vertical-align: middle;
 			background: #fff;
 			box-sizing: border-box;
-			width: 200px;
+			display: block;
+			width: 100%;
+			margin-bottom: 15px;
+		}
+
+		button {
+			display: block;
+			width: 100%;
+			margin: 0;
+		}
+
+		.err {
+			color: #F44336;
+			font-weight: 600;
+			text-align: center;
+			margin-top: 10px;
 		}
 	}
 }

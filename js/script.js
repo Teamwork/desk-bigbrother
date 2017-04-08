@@ -1,6 +1,8 @@
-var BigBrother, FilterViewModel, Inbox, Ticket, User, init;
+var BigBrother, FilterViewModel, Inbox, Ticket, User, login;
 
 window.APIKey = "";
+
+window.siteHref = "";
 
 Inbox = function(name, id) {
   var self;
@@ -72,7 +74,7 @@ FilterViewModel = function() {
     }, 200);
     BigBrother.tickets.removeAll();
     $.ajax({
-      url: "https://digitalcrew.teamwork.com/desk/v1/tickets/search.json",
+      url: siteHref + "/desk/v1/tickets/search.json",
       method: "POST",
       data: {
         "search": '',
@@ -124,7 +126,7 @@ FilterViewModel = function() {
     body += "<p>" + ($(form).find(".rating input:checked").val()) + "</p>";
     $(form).closest(".ticket").addClass("loading");
     $.ajax({
-      url: "https://digitalcrew.teamwork.com/desk/v1/tickets/" + ($(form).find('.id').val()) + ".json",
+      url: siteHref + "/desk/v1/tickets/" + ($(form).find('.id').val()) + ".json",
       method: "POST",
       data: {
         "type": "note",
@@ -165,10 +167,12 @@ BigBrother.selectedUsers.subscribe(function(users) {
   return BigBrother.selectedUserIds(ids);
 });
 
-init = function(APIKey, storeKey) {
+login = function(APIKey, siteHref, storeKey) {
   window.APIKey = APIKey;
+  siteHref = siteHref.trim().replace(/\/$/, "");
+  window.siteHref = siteHref;
   $.ajax({
-    url: "https://digitalcrew.teamwork.com/desk/v1/me.json",
+    url: siteHref + "/desk/v1/me.json",
     headers: {
       "Authorization": "Basic " + btoa(APIKey + ":xxx")
     }
@@ -178,14 +182,22 @@ init = function(APIKey, storeKey) {
     BigBrother.meAvatar(data.user.avatarURL);
     $(".login").hide();
     if (storeKey) {
-      localStorage.setItem("APIKey", $("#APIKey").val());
+      localStorage.setItem("APIKey", APIKey);
+      localStorage.setItem("siteHref", siteHref);
     }
-  }).fail(function() {
+  }).fail(function(err) {
+    console.log(err);
     $(".login").show();
-    return $(".login p").text("Invalid API Key!");
+    if (err.status === 404) {
+      $(".login .err").show().text("Invalid site URL");
+    } else {
+      $(".login .err").show().text("Invalid API Key");
+    }
+    localStorage.removeItem("APIKey");
+    return localStorage.removeItem("siteHref");
   });
   $.ajax({
-    url: "https://digitalcrew.teamwork.com/desk/v1/inboxes.json",
+    url: siteHref + "/desk/v1/inboxes.json",
     headers: {
       "Authorization": "Basic " + btoa(APIKey + ":xxx")
     }
@@ -197,7 +209,7 @@ init = function(APIKey, storeKey) {
     BigBrother.inboxes(mappedInboxes);
   });
   $.ajax({
-    url: "https://digitalcrew.teamwork.com/desk/v1/users.json",
+    url: siteHref + "/desk/v1/users.json",
     headers: {
       "Authorization": "Basic " + btoa(APIKey + ":xxx")
     }
@@ -211,8 +223,9 @@ init = function(APIKey, storeKey) {
     });
     BigBrother.users(mappedUsers);
   });
-  ko.applyBindings(BigBrother);
 };
+
+ko.applyBindings(BigBrother);
 
 $(".filters h4").on("click", function() {
   if ($(this).hasClass("open")) {
@@ -225,11 +238,11 @@ $(".filters h4").on("click", function() {
 
 $("#login-form").on("submit", function(e) {
   e.preventDefault();
-  init($("#APIKey").val(), true);
+  login($("#APIKey").val(), $("#siteHref").val(), true);
 });
 
-if (localStorage.getItem("APIKey")) {
-  init(localStorage.getItem("APIKey"));
+if (localStorage.getItem("APIKey") && localStorage.getItem("siteHref")) {
+  login(localStorage.getItem("APIKey"), localStorage.getItem("siteHref"));
   $(".login").hide();
 }
 

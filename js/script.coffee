@@ -1,4 +1,5 @@
 window.APIKey = ""
+window.siteHref = ""
 
 Inbox = (name, id) ->
 	self = this
@@ -60,7 +61,7 @@ FilterViewModel = () ->
 		$(".loader").stop().show().animate {opacity: 1}, 200
 		BigBrother.tickets.removeAll()
 		$.ajax({
-			url: "https://digitalcrew.teamwork.com/desk/v1/tickets/search.json",
+			url: "#{siteHref}/desk/v1/tickets/search.json",
 			method: "POST",
 			data: {
 				"search": '',
@@ -102,7 +103,7 @@ FilterViewModel = () ->
 		body += "<p>#{$(form).find(".rating input:checked").val()}</p>"
 		$(form).closest(".ticket").addClass("loading")
 		$.ajax({
-			url: "https://digitalcrew.teamwork.com/desk/v1/tickets/#{$(form).find('.id').val()}.json",
+			url: "#{siteHref}/desk/v1/tickets/#{$(form).find('.id').val()}.json",
 			method: "POST",
 			data: {
 				"type": "note",
@@ -136,10 +137,12 @@ BigBrother.selectedUsers.subscribe (users) ->
 	BigBrother.userCount(users.length + " selected")
 	BigBrother.selectedUserIds(ids)
 
-init = (APIKey, storeKey) ->
+login = (APIKey, siteHref, storeKey) ->
 	window.APIKey = APIKey
+	siteHref = siteHref.trim().replace(/\/$/, "")
+	window.siteHref = siteHref
 	$.ajax({
-		url: "https://digitalcrew.teamwork.com/desk/v1/me.json",
+		url: "#{siteHref}/desk/v1/me.json",
 		headers: {
 			"Authorization": "Basic " + btoa(APIKey + ":xxx")
 		}
@@ -149,14 +152,21 @@ init = (APIKey, storeKey) ->
 		BigBrother.meAvatar(data.user.avatarURL)
 		$(".login").hide()
 		if storeKey
-			localStorage.setItem "APIKey", $("#APIKey").val()
+			localStorage.setItem "APIKey", APIKey
+			localStorage.setItem "siteHref", siteHref
 		return
-	.fail ->
+	.fail (err) ->
+		console.log err
 		$(".login").show()
-		$(".login p").text "Invalid API Key!"
+		if err.status is 404
+			$(".login .err").show().text "Invalid site URL"
+		else
+			$(".login .err").show().text "Invalid API Key"
+		localStorage.removeItem "APIKey"
+		localStorage.removeItem "siteHref"
 
 	$.ajax({
-		url: "https://digitalcrew.teamwork.com/desk/v1/inboxes.json",
+		url: "#{siteHref}/desk/v1/inboxes.json",
 		headers: {
 			"Authorization": "Basic " + btoa(APIKey + ":xxx")
 		}
@@ -167,7 +177,7 @@ init = (APIKey, storeKey) ->
 		return
 
 	$.ajax({
-		url: "https://digitalcrew.teamwork.com/desk/v1/users.json",
+		url: "#{siteHref}/desk/v1/users.json",
 		headers: {
 			"Authorization": "Basic " + btoa(APIKey + ":xxx")
 		}
@@ -178,9 +188,9 @@ init = (APIKey, storeKey) ->
 			return new User(name,user.id,user.avatarURL)
 		BigBrother.users(mappedUsers)
 		return
-
-	ko.applyBindings BigBrother
 	return
+
+ko.applyBindings BigBrother
 
 $(".filters h4").on "click", ->
 	if $(this).hasClass("open")
@@ -191,11 +201,11 @@ $(".filters h4").on "click", ->
 
 $("#login-form").on "submit", (e) ->
 	e.preventDefault()
-	init $("#APIKey").val(), true
+	login $("#APIKey").val(), $("#siteHref").val(), true
 	return
 
-if localStorage.getItem "APIKey"
-	init(localStorage.getItem "APIKey")
+if localStorage.getItem("APIKey") and localStorage.getItem("siteHref")
+	login(localStorage.getItem("APIKey"), localStorage.getItem("siteHref"))
 	$(".login").hide()
 
 $("#logout").on "click", (e) ->
