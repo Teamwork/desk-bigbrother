@@ -67,7 +67,7 @@
 									<img data-bind="attr: {src: createdBy.avatarURL}" width="30" />
 									<span data-bind="text: createdBy.firstName"></span>
 							</div>
-							<!-- ko if: body.length === 0 && newTicketStatus !== null -->
+							<!-- ko if: newTicketStatus !== null -->
 								<span data-bind="text: 'updated the status to ' + newTicketStatus"></span>
 							<!-- /ko -->
 							<!-- ko if: body.length !== 0 -->
