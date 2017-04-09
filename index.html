@@ -74,7 +74,7 @@
 								assigned the ticket to <!-- ko text: newTicketAssignment.firstName --><!--/ko--> <!-- ko text: newTicketAssignment.lastName --><!--/ko-->
 							<!-- /ko -->
 							<!-- ko if: type === 'task-pending' -->
-								created the task <a data-bind="attr: {href: siteHref + '/#tasks/' + taskId}, text: body"></a>
+								created the task <a data-bind="attr: {href: siteHref + '/#tasks/' + taskId}, text: body" target="_blank"></a>
 							<!-- /ko -->
 							<!-- ko if: body.length !== 0 && type !== 'task-pending' -->
 								<div class="body" data-bind="html: body"></div>
