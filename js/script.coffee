@@ -40,6 +40,8 @@ FilterViewModel = () ->
 	self.meAvatar = ko.observable("images/pixel.png")
 	self.meName = ko.observable()
 	self.meEmail = ko.observable()
+	self.threads = ko.observableArray()
+	self.threadSubject = ko.observable()
 
 	self.selectInbox = (inbox) ->
 		$("#inboxes a[data-id='#{inbox.id}']").toggleClass "selected"
@@ -74,7 +76,7 @@ FilterViewModel = () ->
 				"sortDir": "asc",
 				"statuses": ["solved","closed"],
 				"lastUpdated": $("#startDate").val()
-			}
+			},
 			headers: {
 				"Authorization": "Basic " + btoa(APIKey + ":xxx")
 			}
@@ -92,6 +94,29 @@ FilterViewModel = () ->
 					return
 				$(".tickets").stop().show().animate {opacity: 1}, 200
 			return
+		return
+
+	self.getThread = (ticket) ->
+		id = ticket.id
+		subject = ticket.subject
+		$.ajax({
+			url: "#{siteHref}/desk/v1/tickets/#{id}.json",
+			method: "GET",
+			headers: {
+				"Authorization": "Basic " + btoa(APIKey + ":xxx")
+			}
+		}).done (data) ->
+			threads = data.ticket.threads
+			BigBrother.threads(threads)
+			BigBrother.threadSubject(subject)
+			$("#thread").css "transform", "translateX(0)"
+			return
+		return
+
+	self.closeThread = ->
+		$("#thread").css "transform", "translateX(100%)"
+		BigBrother.threads.removeAll()
+		BigBrother.threadSubject('')
 		return
 
 	self.reviewTickets = (form) ->

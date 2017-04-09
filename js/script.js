@@ -47,6 +47,8 @@ FilterViewModel = function() {
   self.meAvatar = ko.observable("images/pixel.png");
   self.meName = ko.observable();
   self.meEmail = ko.observable();
+  self.threads = ko.observableArray();
+  self.threadSubject = ko.observable();
   self.selectInbox = function(inbox) {
     $("#inboxes a[data-id='" + inbox.id + "']").toggleClass("selected");
     if (self.selectedInboxes.indexOf(inbox) > -1) {
@@ -115,6 +117,29 @@ FilterViewModel = function() {
         }, 200);
       }
     });
+  };
+  self.getThread = function(ticket) {
+    var id, subject;
+    id = ticket.id;
+    subject = ticket.subject;
+    $.ajax({
+      url: siteHref + "/desk/v1/tickets/" + id + ".json",
+      method: "GET",
+      headers: {
+        "Authorization": "Basic " + btoa(APIKey + ":xxx")
+      }
+    }).done(function(data) {
+      var threads;
+      threads = data.ticket.threads;
+      BigBrother.threads(threads);
+      BigBrother.threadSubject(subject);
+      $("#thread").css("transform", "translateX(0)");
+    });
+  };
+  self.closeThread = function() {
+    $("#thread").css("transform", "translateX(100%)");
+    BigBrother.threads.removeAll();
+    BigBrother.threadSubject('');
   };
   self.reviewTickets = function(form) {
     var body;

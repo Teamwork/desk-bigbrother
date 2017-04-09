@@ -56,6 +56,26 @@
 				</form>
 			</div>
 			<div class="col results">
+				<div id="thread">
+					<h3 class="thread-subject">
+						<a href="#" data-bind="click: closeThread"><i class="fa fa-arrow-left"></i></a>
+						<span data-bind="text: threadSubject"></span>
+					</h3>
+					<ul data-bind="foreach: threads">
+						<li data-bind="attr: {class: type + ' ' + happinessRatingName}">
+							<div class="name">
+									<img data-bind="attr: {src: createdBy.avatarURL}" width="30" />
+									<span data-bind="text: createdBy.firstName"></span>
+							</div>
+							<!-- ko if: body.length === 0 && newTicketStatus !== null -->
+								<span data-bind="text: 'updated the status to ' + newTicketStatus"></span>
+							<!-- /ko -->
+							<!-- ko if: body.length !== 0 -->
+								<div class="body" data-bind="html: body"></div>
+							<!-- /ko -->
+						</li>
+					</ul>
+				</div>
 				<div class="placeholder">
 					<img src="images/logo.png" width="293" />
 					<h3>Review Tickets</h3>
@@ -71,7 +91,7 @@
 						<div class="ticket">
 							<div>
 								<h4>
-									<a href="#" target="_blank" data-bind="html: subject + '<span>#' + id + '</span>', attr: {href: 'https://digitalcrew.teamwork.com/desk/#/tickets/' + id}"></a>
+									<a href="#" target="_blank" data-bind="html: subject + '<span>#' + id + '</span>', click: $root.getThread, attr: {href: 'https://digitalcrew.teamwork.com/desk/#/tickets/' + id}"></a>
 								</h4>
 								<p data-bind="text: preview"></p>
 								<ul class="info">

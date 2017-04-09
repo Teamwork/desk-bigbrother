@@ -282,6 +282,7 @@ h4 {
 .col {
 	padding: 30px;
 	box-sizing: border-box;
+	min-height: 1vh;
 }
 
 .results {
@@ -327,6 +328,16 @@ h4 {
 			flex-basis: 0;
 			flex-grow: 1;
 			padding: 0 30px;
+		}
+	}
+
+	.view-thread {
+		color: #666;
+		text-decoration: none;
+		font-weight: 600;
+
+		&:hover {
+			text-decoration: underline;
 		}
 	}
 
@@ -488,5 +499,88 @@ button {
 
 	&:hover {
 		background: darken(@green, 15%)
+	}
+}
+
+#thread {
+	box-sizing: border-box;
+	background: white;
+	position: fixed;
+	top: 0;
+	right: 0;
+	width: 800px;
+	max-width: 100%;
+	height: 100%;
+	overflow: auto;
+	z-index: 50;
+	padding: 30px;
+	transform: translateX(100%);
+	transition: transform 0.15s;
+	box-shadow: 0 0 10px fade(black,5%);
+
+	> ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+
+		> li {
+			border: 1px solid #eee;
+			margin-bottom: 15px;
+			border-radius: 4px;
+			padding: 15px;
+		}
+	}
+
+	.name {
+		display: inline-block;
+		font-size: 16px;
+		font-weight: 600;
+
+		img {
+			border-radius: 50%;
+			vertical-align: middle;
+			margin-right: 5px;
+		}
+	}
+
+	.eventInfo, .happiness {
+		line-height: 20px;
+		padding: 5px 15px;
+		background: #fafafa;
+
+		> * {
+			display: inline;
+			font-size: 13px;
+		}
+
+		img {
+			width: 16px;
+			height: 16px;
+		}
+	}
+
+	.task-pending {
+		display: none;
+	}
+
+	.message .body, .note .body {
+		margin-top: 15px;
+		padding-top: 15px;
+		border-top: 1px solid #eee;
+	}
+
+	.note {
+		background: #fffde7;
+	}
+
+	> h3 {
+		font-size: 18px;
+		font-weight: 600;
+
+		a {
+			color: inherit;
+			display: inline-block;
+			margin-right: 10px;
+		}
 	}
 }
