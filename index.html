@@ -68,7 +68,10 @@
 									<span data-bind="text: createdBy.firstName"></span>
 							</div>
 							<!-- ko if: newTicketStatus !== null -->
-								<span data-bind="text: 'updated the status to ' + newTicketStatus"></span>
+								updated the status to <!-- ko text: newTicketStatus --><!--/ko-->
+							<!-- /ko -->
+							<!-- ko if: newTicketAssignment !== null -->
+								assigned the ticket to <!-- ko text: newTicketAssignment.firstName --><!--/ko--> <!-- ko text: newTicketAssignment.lastName --><!--/ko-->
 							<!-- /ko -->
 							<!-- ko if: body.length !== 0 -->
 								<div class="body" data-bind="html: body"></div>
@@ -96,9 +99,9 @@
 								<p data-bind="text: preview"></p>
 								<ul class="info">
 									<li><img src="images/pixel.png" data-bind="attr: {src: avatar}" /></li>
-									<li><strong>Agent:</strong> <span data-bind="text: agent"></span></li>
-									<li><strong>Status:</strong> <span data-bind="text: status"></span></li>
-									<li><strong>Last Updated:</strong> <span data-bind="text: moment(date).format('MMMM Do YYYY, h:mm a')"></span></li>
+									<li><strong>Agent:</strong> <!-- ko text: agent --><!--/ko--></li>
+									<li><strong>Status:</strong> <!-- ko text: status --><!--/ko--></li>
+									<li><strong>Last Updated:</strong> <!-- ko text: moment(date).format('MMMM Do YYYY, h:mm a') --><!--/ko--></li>
 								</ul>
 							</div>
 							<form data-bind="submit: $root.reviewTickets">
