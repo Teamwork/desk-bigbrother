@@ -133,11 +133,11 @@ FilterViewModel = function() {
       threads = data.ticket.threads;
       BigBrother.threads(threads);
       BigBrother.threadSubject(subject);
-      $("#thread").css("transform", "translateX(0)");
+      $("#thread").addClass("open");
     });
   };
   self.closeThread = function() {
-    $("#thread").css("transform", "translateX(100%)");
+    $("#thread").removeClass("open");
     BigBrother.threads.removeAll();
     BigBrother.threadSubject('');
   };
@@ -270,6 +270,12 @@ if (localStorage.getItem("APIKey") && localStorage.getItem("siteHref")) {
   login(localStorage.getItem("APIKey"), localStorage.getItem("siteHref"));
   $(".login").hide();
 }
+
+$(document).on("click", function(e) {
+  if ($(e.target) !== $("#thread") && !$(e.target).closest("#thread").length) {
+    $("#thread").removeClass("open");
+  }
+});
 
 $("#logout").on("click", function(e) {
   e.preventDefault();

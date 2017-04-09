@@ -62,19 +62,22 @@
 						<span data-bind="text: threadSubject"></span>
 					</h3>
 					<ul data-bind="foreach: threads">
-						<li data-bind="attr: {class: type + ' ' + happinessRatingName}">
-							<div class="name">
+						<li data-bind="attr: {class: type}">
+							<span class="name">
 									<img data-bind="attr: {src: createdBy.avatarURL}" width="30" />
 									<span data-bind="text: createdBy.firstName"></span>
-							</div>
+							</span>
 							<!-- ko if: newTicketStatus !== null -->
 								updated the status to <!-- ko text: newTicketStatus --><!--/ko-->
 							<!-- /ko -->
-							<!-- ko if: newTicketAssignment !== null -->
+							<!-- ko if: newTicketAssignment !== null && type !== 'message' -->
 								assigned the ticket to <!-- ko text: newTicketAssignment.firstName --><!--/ko--> <!-- ko text: newTicketAssignment.lastName --><!--/ko-->
 							<!-- /ko -->
 							<!-- ko if: type === 'task-pending' -->
 								created the task <a data-bind="attr: {href: siteHref + '/#tasks/' + taskId}, text: body" target="_blank"></a>
+							<!-- /ko -->
+							<!-- ko if: happinessRatingName -->
+								gave a "<!-- ko text: happinessRatingName --><!-- /ko -->" happiness rating<!-- ko if: body.length !== 0 -->:<!-- /ko -->
 							<!-- /ko -->
 							<!-- ko if: body.length !== 0 && type !== 'task-pending' -->
 								<div class="body" data-bind="html: body"></div>

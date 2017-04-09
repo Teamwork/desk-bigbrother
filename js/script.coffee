@@ -109,12 +109,12 @@ FilterViewModel = () ->
 			threads = data.ticket.threads
 			BigBrother.threads(threads)
 			BigBrother.threadSubject(subject)
-			$("#thread").css "transform", "translateX(0)"
+			$("#thread").addClass "open"
 			return
 		return
 
 	self.closeThread = ->
-		$("#thread").css "transform", "translateX(100%)"
+		$("#thread").removeClass "open"
 		BigBrother.threads.removeAll()
 		BigBrother.threadSubject('')
 		return
@@ -232,6 +232,11 @@ $("#login-form").on "submit", (e) ->
 if localStorage.getItem("APIKey") and localStorage.getItem("siteHref")
 	login(localStorage.getItem("APIKey"), localStorage.getItem("siteHref"))
 	$(".login").hide()
+
+$(document).on "click", (e) ->
+	if $(e.target) != $("#thread") and !$(e.target).closest("#thread").length
+		$("#thread").removeClass "open"
+	return
 
 $("#logout").on "click", (e) ->
 	e.preventDefault()

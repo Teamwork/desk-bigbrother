@@ -518,6 +518,10 @@ button {
 	transition: transform 0.15s;
 	box-shadow: 0 0 10px fade(black,5%);
 
+	&.open {
+		transform: translateX(0);
+	}
+
 	> ul {
 		list-style: none;
 		margin: 0;
@@ -532,7 +536,6 @@ button {
 	}
 
 	.name {
-		display: inline-block;
 		font-size: 16px;
 		font-weight: 600;
 
@@ -547,10 +550,11 @@ button {
 		line-height: 20px;
 		padding: 5px 15px;
 		background: #fafafa;
+		font-size: 12px;
 
-		> * {
+		.name, .body {
 			display: inline;
-			font-size: 13px;
+			font-size: inherit;
 		}
 
 		img {
@@ -576,6 +580,7 @@ button {
 	> h3 {
 		font-size: 18px;
 		font-weight: 600;
+		margin: 0 0 15px;
 
 		a {
 			color: inherit;
